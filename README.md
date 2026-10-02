@@ -3,6 +3,8 @@
 A step-by-step Python debugger for newcomers that runs entirely in the browser — no install,
 no account, and your code never leaves your computer.
 
+**▶ Try it live: [bruno.pacheco.lu/snake-tutor](https://bruno.pacheco.lu/snake-tutor/)**
+
 - **Left:** your script (open a `.py` file, drag one in, or just type).
 - **Right, top:** debug buttons with the same names and shortcuts as VS Code.
 - **Right, middle:** the console — `print()` output appears here and you answer `input()` right in it.
@@ -51,7 +53,8 @@ npm test
 1. Push this repository to GitHub.
 2. In **Settings → Pages**, set **Source** to **GitHub Actions**.
 3. Push to `main` (or `master`). [.github/workflows/pages.yml](.github/workflows/pages.yml) runs the
-   tests and publishes the site to `https://<user>.github.io/<repo>/`.
+   tests and publishes the site to `https://<user>.github.io/<repo>/` (or your custom domain).
+4. Enable **Enforce HTTPS** — the service worker that makes debugging work only runs over HTTPS.
 
 ## Spec-driven development
 
