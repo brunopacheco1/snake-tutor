@@ -71,6 +71,9 @@ html, body {
 }
 
 body {
+  /* The stacked layout below keys off the page's own width (not the viewport),
+     so it also kicks in when the page is zoomed without resizing the viewport. */
+  container-type: inline-size;
   background: var(--bg);
   color: var(--text);
   font: 14px/1.4 var(--sans);
@@ -81,7 +84,7 @@ body {
 .layout {
   --left: 55%;
   display: grid;
-  grid-template-columns: minmax(280px, var(--left)) 6px minmax(320px, 1fr);
+  grid-template-columns: minmax(min(280px, 40%), var(--left)) 6px minmax(min(320px, 45%), 1fr);
   height: 100vh;
   padding: 8px;
   gap: 0;
@@ -424,7 +427,7 @@ details[open] > summary .var-row::before { content: "▾"; }
 }
 .blocker-card h2 { margin-top: 0; font-size: 18px; }
 
-@media (max-width: 760px) {
+@container (max-width: 760px) {
   .layout { grid-template-columns: 1fr; grid-template-rows: 45vh auto; height: auto; min-height: 100vh; }
   .splitter-v { display: none; }
   .side { min-height: 80vh; }
