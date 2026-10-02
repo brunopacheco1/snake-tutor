@@ -1,0 +1,45 @@
+name: Translation problem
+description: Report wrong, unclear or missing text in one of Snake Tutor's languages.
+title: "[lang] "
+labels: [translation]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping make Snake Tutor clearer for learners!
+        Please **do not paste private code** — a short description of where the text appears is enough.
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language
+      options:
+        - English
+        - Français
+        - Deutsch
+        - Italiano
+        - Português (Portugal)
+        - Português (Brasil)
+        - Lëtzebuergesch
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Where does the text appear?
+      placeholder: e.g. the Step Over button tooltip, the status line while paused
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: Current text
+    validations:
+      required: true
+  - type: textarea
+    id: suggested
+    attributes:
+      label: Suggested text
+  - type: textarea
+    id: other
+    attributes:
+      label: Anything else?

@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Console pane: program output plus an inline field for input().
+import { t } from "./i18n.js";
+
 export function createConsole(element) {
   const output = document.createElement("div");
   output.className = "console-output";
@@ -34,7 +36,9 @@ export function createConsole(element) {
     field = document.createElement("input");
     field.type = "text";
     field.className = "console-input";
-    field.setAttribute("aria-label", "Type your answer and press Enter");
+    // Tagged so a language switch relabels a field that is already open.
+    field.dataset.i18nAriaLabel = "console.inputLabel";
+    field.setAttribute("aria-label", t("console.inputLabel"));
     field.autocomplete = "off";
     field.spellcheck = false;
     field.addEventListener("keydown", (event) => {

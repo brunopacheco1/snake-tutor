@@ -21,6 +21,27 @@ no account, and your code never leaves your computer.
 
 Click next to a line number to set a breakpoint.
 
+## Languages
+
+Snake Tutor speaks English, Français, Deutsch, Italiano, Português (Portugal), Português (Brasil)
+and Lëtzebuergesch. It starts in your system's language and falls back to English; pick another
+from the menu at the top of the script pane and it is remembered in this browser only.
+**Automatic** goes back to following the system. Python itself — error messages, tracebacks,
+your program's output — always stays exactly as Python prints it.
+
+Translations other than English are marked **beta** until a fluent speaker has reviewed them.
+Spotted something wrong? Use **Report a translation problem** next to the menu, or
+[open a translation issue](https://github.com/brunopacheco1/snake-tutor/issues/new?template=translation.yml&labels=translation).
+
+- **Add a language**: copy [js/locales/en.js](js/locales/en.js) to `js/locales/<code>.js`, translate
+  `messages` and `sample` (keep every key, `{placeholder}`, shortcut and the example's code
+  unchanged), import it in [js/i18n.js](js/i18n.js), then run `npm test` — the tests check that
+  nothing is missing and that the example still runs.
+- **Review a language**: a fluent speaker reviews every text of the language — including the
+  example program — in a pull request, and the maintainer merges the change that sets
+  `reviewed: true` in its `meta`, which removes the beta label. Later edits to a reviewed language
+  need a fluent speaker's approval in their own pull request.
+
 ## How it works
 
 Real CPython ([Pyodide](https://pyodide.org), Python 3.14) runs in a Web Worker. The stepping

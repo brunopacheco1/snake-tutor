@@ -35,7 +35,7 @@ Worker → page:
 
 | type | fields | meaning |
 |------|--------|---------|
-| `status` | `text` | loading progress |
+| `status` | `key`: `"status.downloading"` \| `"status.startingDebugger"` | loading progress; the page translates the key (see specs/002-multi-language-ui/contracts/worker-protocol-delta.md) |
 | `ready` | `version` | Python available |
 | `stdout` / `stderr` | `text` | output chunk |
 | `running` | — | executing freely |
