@@ -7,6 +7,7 @@ body:
     attributes:
       value: |
         Thanks for helping make Snake Tutor clearer for learners!
+        You can write in English or in the language you are reporting.
         Please **do not paste private code** — a short description of where the text appears is enough.
   - type: dropdown
     id: language

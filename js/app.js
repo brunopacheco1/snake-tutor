@@ -362,7 +362,12 @@ function renderLanguage() {
   const auto = new Option(t("lang.auto", { language: systemMeta.name }), "auto", false, pref === "auto");
   langSelect.replaceChildren(
     auto,
-    ...i18n.LOCALES.map((meta) => new Option(languageLabel(meta), meta.code, false, meta.code === pref)),
+    ...i18n.LOCALES.map((meta) => {
+      const option = new Option(languageLabel(meta), meta.code, false, meta.code === pref);
+      // Each name is read in its own language, e.g. "Deutsch" as German on a French page (FR-018).
+      option.lang = meta.code;
+      return option;
+    }),
   );
   // Only the locale code goes into the link: never the script or anything else (FR-015).
   langReport.hidden = !i18n.isBeta();
@@ -385,6 +390,9 @@ i18n.onChange(() => {
   else variables.reset();
   document.title = t("title.file", { file: fileName });
   renderLanguage();
+  // Tell screen readers once, in the new language; focus stays on the selector (FR-018).
+  const activeMeta = i18n.LOCALES.find((meta) => meta.code === i18n.locale());
+  $("lang-announce").textContent = t("lang.changed", { language: activeMeta.name });
 });
 
 // ---------------------------------------------------------------- splitters

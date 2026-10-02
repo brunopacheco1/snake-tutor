@@ -23,6 +23,19 @@
 - Q: Who can mark a translation as reviewed, and does it go back to beta when its text changes later? → A: A fluent speaker reviews the whole language in a pull request and the maintainer merges the change that marks it reviewed; later edits need a fluent speaker's approval in their own pull request, and the language stays reviewed.
 - Q: Does SC-001 count console messages printed before a language switch, and does an English fallback count as a failure? → A: SC-001 covers text shown after the switch; earlier console lines are exempt; any English fallback in a non-English language fails the release.
 
+### Session 2026-10-03
+
+- Q: What should the spec require for using the language menu with a keyboard and a screen reader? → A: Reachable with Tab and operable with arrow keys and Enter like the other controls; labelled "Language" in the active language; entries announce beta status; each language name is marked with its own language; US1 scenario 4 is checked with VoiceOver on Safari and NVDA on Firefox.
+- Q: When the learner switches language, should a screen reader announce the change? → A: Yes — once, politely, in the new language (e.g. "Langue : Français"); focus stays on the selector.
+- Q: What contrast and zoom levels must the new language controls meet? → A: Text contrast ≥ 4.5:1 and focus outlines/control borders ≥ 3:1 in both light and dark themes; at 200% browser zoom at 1024×768, no language control or label is clipped or overlapping.
+- Q: When a translation is too long for the space it has, how may the layout respond? → A: Toolbars and headers may wrap onto more rows; button names, headings and status text are never shortened or hidden; only the language menu's closed state may be shortened with "…", and its open list always shows full names.
+- Q: How should SC-006's "no open reports of misleading terms for core debugging concepts" be measured? → A: Core concepts are the six debug controls, breakpoint, call stack, variables, console and the error explanations; a reviewed language passes if no translation report about these has been open for more than 30 days.
+- Q: What test should a translated message pass to count as "plain language" for a beginner? → A: Everyday words (no technical terms beyond the debug control names and Python's own words); says what happened, with the line number for errors when known; says what the learner can do next; at most two sentences — for beta and reviewed texts alike.
+- Q: What should happen when a language turns out to contain a misleading translation that can't be fixed quickly? → A: The maintainer first marks it as beta again; if the misleading term about a core concept is still unfixed after 30 days, the language is removed and learners who had chosen it fall back to Automatic.
+- Q: Should each language have a short written style guide covering punctuation, quote marks and the chosen word for each core concept? → A: Yes — one style guide per language, kept with the translations, recording the form of address, punctuation and quote conventions, and the term for each core concept; translations follow it and reviewers check against it.
+- Q: What exactly must be the same across languages for the example program to count as "behaving identically"? → A: Same code line by line (same identifiers and line count; only comments and string contents differ); with the same input it pauses on the same lines and shows the same variable values — only printed wording differs.
+- Q: How should Snake Tutor depend on VS Code's translations over time? → A: Terms are used as words (no VS Code files copied, no NOTICE entry); each style guide records the terms with the VS Code version checked; a VS Code rename is adopted only at that language's next review or edit.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Use Snake Tutor in my own language (Priority: P1)
@@ -54,7 +67,8 @@ no tool-provided text remains in another language.
    **Then** the plain-language explanation pointing at the offending line is in Luxembourgish,
    while the Python exception name and message are shown exactly as Python produced them.
 4. **Given** any supported language, **When** a screen reader reads the controls, **Then**
-   accessible labels are in the selected language and the page declares that language.
+   accessible labels are in the selected language and the page declares that language. This is
+   checked with VoiceOver on Safari and with NVDA on Firefox.
 
 ---
 
@@ -128,10 +142,19 @@ usable without it.
   as Automatic: the system language rule applies, then English.
 - A translated string is missing for some text: the English text is shown for that item
   rather than a blank or an internal key.
-- Longer translations (German, Portuguese) must not overflow or truncate buttons, tooltips or
-  panel headings at the supported window sizes.
+- Longer translations (German, Italian, Portuguese, Luxembourgish) must not overflow or
+  truncate buttons, tooltips or panel headings at the supported window sizes (see SC-005).
 - Python output, exception names/messages and the learner's own code and `print()` text are
   never translated.
+- Learner-controlled text inserted into a translated message (a file name, an exception type,
+  a function name, a value) is shown exactly as given, as plain text, never translated and
+  never interpreted as formatting.
+- An error with no known line number gets its own explanation in every language, without
+  the "on line N" part.
+- A message that contains a count (e.g. "… 3 more") uses the plural rules of the active
+  language, including languages whose plural forms differ from English.
+- Whatever the learner types into the example's `input()` — empty text, accents, non-Latin
+  characters — is handled exactly as Python handles it; the example never rejects input.
 
 ## Requirements *(mandatory)*
 
@@ -150,53 +173,96 @@ usable without it.
   session.
 - **FR-004**: All tool-provided text MUST be translated: visible labels, tooltips, accessible
   labels, placeholders, console status messages, the message text of confirmation dialogs,
-  error explanations, the startup-failure screen and the browser tab title suffix. Text drawn by
-  the browser itself (dialog OK/Cancel buttons, file-picker labels) follows the browser's own
-  language and is out of scope.
+  error explanations, the startup-failure screen, the browser tab title and the page
+  description shown in search results and link previews. The product name "Snake Tutor" is
+  never translated. Tool text includes labels the tool chooses itself, such as "main program"
+  for the top-level frame. Text drawn by the browser itself (dialog OK/Cancel buttons,
+  file-picker labels) follows the browser's own language and is out of scope.
 - **FR-005**: Debug control labels MUST be exactly the names Visual Studio Code uses in that
   language where such a translation exists, even when the term is unusual for beginners. Each
   control's tooltip MUST add its keyboard shortcut and a plain-language description of what it
   does (e.g. "Contornar (F10) — executar esta linha"). Keyboard shortcuts MUST stay identical in
-  every language.
+  every language. This applies to the six debug controls (Start/Continue, Step Over, Step Into,
+  Step Out, Restart, Stop); the source is the official VS Code language packs, as verified and
+  recorded in research.md R5. Each language's style guide (FR-020) records these terms with
+  the VS Code version they were checked against; a later VS Code rename is adopted only at
+  that language's next review or edit, which re-checks the terms. Other debugging terms (call stack, breakpoint, variables) SHOULD
+  use the VS Code term where one exists.
 - **FR-006**: Python's own output — exception types and messages, tracebacks, and anything the
   learner's program prints — MUST be shown exactly as Python produced it, in every language.
+  This includes the type names and value representations in the Memory panel (e.g. `int`,
+  `str`, `<function greet>`).
 - **FR-007**: While the preference is Automatic (including on a first visit), the tool MUST
   select the first supported language in the system's preferred-language list (matching on the
   base language, except Portuguese, which matches on region as described in Edge Cases),
   falling back to English.
 - **FR-008**: The learner's explicit language choice MUST be remembered locally in the browser
   and take precedence over the system language on later visits; it MUST NOT be sent anywhere.
+  Only the language code is stored, separately from the saved script, and Automatic stores
+  nothing.
   Choosing "Automatic" MUST clear the remembered choice and apply the system language
   immediately.
 - **FR-009**: The page MUST declare the active language so assistive technologies and browser
-  features (spell-check, translation prompts) behave correctly.
+  features (spell-check, translation prompts) behave correctly, using the codes `en`, `fr`,
+  `de`, `it`, `pt-PT`, `pt-BR` and `lb`.
 - **FR-010**: If a translation is missing for any text, the English text MUST be shown for
   that item. This is a safety net only: a release MUST NOT contain missing translations (see
   SC-001).
 - **FR-011**: The built-in example program MUST be provided in each supported language
-  (comments, prompts and printed text), behaving identically across languages.
+  (comments, prompts and printed text), behaving identically across languages: the code is the
+  same line by line, with the same identifiers and line count, and only comments and the text
+  inside string literals differ. Given the same input, it pauses on the same lines and shows
+  the same variable values, except for values built from translated text (e.g. the greeting
+  `message`); only that wording and the printed wording differ.
 - **FR-012**: Switching language MUST never modify the learner's current script.
-- **FR-013**: Adding a further language later MUST require only supplying its translations,
-  without changing the tool's behaviour elsewhere.
+- **FR-013**: Adding a further language later MUST require only supplying its translations and
+  its style guide (FR-020), without changing the tool's behaviour elsewhere.
 - **FR-014**: Every translation not yet reviewed by a fluent speaker MUST be marked "beta" next
-  to its name in the language selector. Beta translations MUST otherwise behave exactly like
+  to its name in the language selector, in the form "‹name› (‹beta›)", where ‹beta› is the
+  word for "beta" in the active interface language (e.g. "Deutsch (bêta)" while the interface
+  is in French). Beta translations MUST otherwise behave exactly like
   reviewed ones, including automatic selection from the system language.
 - **FR-015**: While a beta translation is active, the interface MUST offer a "Report a
   translation problem" link (in that language) pointing to the project's public issue
   tracker on GitHub. The link's label or tooltip MUST state, in that language, that it opens
   GitHub in a new tab and needs a GitHub account. The only data the link may carry is the
   active language code; it MUST NOT carry the learner's script or anything else, and MUST NOT
-  pass on the referring page.
+  pass on the referring page. The issue form it opens is written in English, accepts reports in
+  English or in the language being reported, and asks reporters not to paste private code.
 - **FR-016**: Removing the "beta" label from a reviewed translation MUST require no change
   other than marking that translation as reviewed. A translation becomes reviewed only through
   a pull request in which a fluent speaker of that language has reviewed every text of it
   (including the example program), merged by the project maintainer. Later changes to a
   reviewed translation need a fluent speaker's approval in their own pull request; the
-  translation stays reviewed.
+  translation stays reviewed. If a translation is found to contain a misleading term for a
+  core debugging concept (SC-006), the maintainer MUST mark it as beta again; if that term is
+  still unfixed after 30 days, the language MUST be removed from the selector, and learners
+  who had chosen it fall back to Automatic (see Edge Cases).
 - **FR-017**: Every translation MUST address the learner informally and consistently across all
   its texts, including the example program: French "tu", German "du", Italian "tu", European
   Portuguese "tu", Brazilian Portuguese "você", Luxembourgish "du". Where a sentence can avoid
   addressing the learner directly, that is also acceptable.
+- **FR-018**: The language selector MUST be reachable with the Tab key and operable with the
+  arrow keys and Enter, like the other controls. Its accessible name MUST be "Language" in the
+  active language, and each entry MUST announce its beta status. Each language's own name in
+  the selector MUST be marked with that language, so assistive technology pronounces it
+  correctly (e.g. "Deutsch" as German while the interface is in French). After a language
+  change, assistive technology MUST be told once, politely and in the new language, which
+  language is now active (e.g. "Langue : Français"), without moving the keyboard focus away
+  from the selector.
+- **FR-019**: Every tool message, in every translation and whether beta or reviewed, MUST be
+  plain language: (1) everyday words, with no technical terms other than the debug control
+  names and Python's own words; (2) it says what happened and, for an error, the line number
+  when one is known; (3) it says what the learner can do next, where there is something to do;
+  (4) it has at most two sentences. Text that Python or the browser supplies inside a message
+  (e.g. a loading error) is exempt.
+- **FR-020**: Each non-English language MUST have a style guide, kept with the translations,
+  that records its form of address (FR-017), its punctuation and quotation conventions (e.g.
+  the French space before "?" and ":", German „…“ quotes) and the term used for each core
+  debugging concept (the six debug controls, breakpoint, call stack, variables, console). Every
+  translation MUST follow its style guide, and the FR-016 review checks the translation
+  against it; a change to a reviewed style guide follows the same review rule as the
+  translation.
 
 ### Key Entities
 
@@ -204,6 +270,8 @@ usable without it.
   the fallback (English), and its review status (reviewed or beta).
 - **Translation set**: for one language, the text for every tool-provided message plus the
   localized example program.
+- **Style guide**: for one non-English language, its form of address, punctuation and quote
+  conventions, and the term for each core debugging concept.
 - **Language preference**: either Automatic (default — follow the system language) or one
   specific supported language; an explicit language is stored only in the learner's browser.
 
@@ -223,27 +291,45 @@ usable without it.
 - **SC-004**: Switching language mid-session loses 0 characters of the script and 0
   breakpoints, and a paused program can be resumed normally afterwards.
 - **SC-005**: No label, button or heading is clipped or overflows in any language at the
-  supported desktop window sizes.
+  supported desktop window sizes of 1280×800 and 1024×768. Toolbars and headers may wrap onto
+  more rows; button names, headings and status text are never shortened with "…" or hidden.
+  Only the language selector's closed state may be shortened with "…"; its open list always
+  shows each name in full.
 - **SC-006**: All 7 translations are available at release; every translation is labelled
-  "beta" until it has been reviewed as described in FR-016, and once reviewed it has no open reports of
-  misleading terms for core debugging concepts.
+  "beta" until it has been reviewed as described in FR-016. Once reviewed, a language passes if
+  no translation report about a core debugging concept has been open for more than 30 days;
+  the core concepts are the six debug controls (Start/Continue, Step Over, Step Into, Step Out,
+  Restart, Stop), breakpoint, call stack, variables, console and the error explanations.
 - **SC-007**: A learner using a beta translation can reach the translation-problem report page
   in at most 2 interactions.
+- **SC-008**: The language selector, the beta label and the report link have a text contrast of
+  at least 4.5:1, and their focus outlines and control borders at least 3:1, in both the light
+  and the dark theme; at 200% browser zoom in a 1024×768 window, none of them is clipped or
+  overlaps other content.
 
 ## Assumptions
 
 - The system language is read from the browser's preferred-language list, which by default
   mirrors the operating system's language settings.
 - Regional variants other than the two Portuguese ones (e.g. Swiss German, Canadian French) are
-  out of scope; they use the main translation for their language.
+  out of scope; they use the main translation for their language. Portuguese is the exception
+  because European and Brazilian Portuguese differ in everyday interface words (e.g.
+  "ficheiro"/"arquivo", "ecrã"/"tela") a beginner meets constantly.
+- One European Portuguese text serves every non-Brazilian Portuguese region (pt-AO, pt-MZ, …).
+  This is revisited if translation reports from those regions show it is unclear.
+- Using VS Code's terms as words needs no NOTICE entry, because no VS Code files are copied.
 - Only the Snake Tutor interface is translated; Python itself (keywords, built-in names,
   exception messages) remains in English, as in every real Python installation — this keeps
   the tool faithful to real Python (Constitution III).
 - Where Visual Studio Code has no translation (e.g. Luxembourgish), the project chooses its own
   debug-control names, keeping them consistent across the interface.
 - The README and project documentation stay in English; only the in-app interface is in scope.
+  The README's "Languages" section is where translators and reviewers find how to add or
+  review a language, and it links to the style guides.
 - Translations ship with the site as static content; no translation service, account or
   network call is involved (Constitution II and IV).
 - Right-to-left languages are out of scope for this feature.
+- Narrow and mobile screen widths are out of scope; the constitution supports desktop browsers
+  only.
 - A "fluent speaker" is someone the project maintainer accepts as having native or equivalent
   command of the language; the pull-request review (FR-016) is the record of it.

@@ -16,90 +16,90 @@ covered where they overlap these areas.
 
 ## Requirement Completeness: what is translated
 
-- [ ] CHK001 - Is "tool-provided text" defined in one authoritative place (an inventory or rule), so that FR-004 can be judged complete without reading the code? [Completeness, Spec §FR-004, Gap]
-- [ ] CHK002 - Does the spec say whether the product name "Snake Tutor" is ever translated, given that FR-004 requires the tab "title suffix" to be translated? [Clarity, Spec §FR-004, Ambiguity]
-- [ ] CHK003 - Does the spec say whether the page description shown to search engines and link previews is part of the translated text? [Completeness, Gap]
-- [ ] CHK004 - Are requirements stated for text that comes from the browser rather than the tool, such as the OK/Cancel buttons of confirmation dialogs and the file-picker labels, which FR-004's "confirmation dialogs" seems to cover? [Conflict, Spec §FR-004]
-- [ ] CHK005 - Does the spec say whether the variable *type* names (`int`, `str`, `list`) and the `<function greet>` representation in the Memory panel count as Python text (never translated) or tool text? [Clarity, Spec §FR-006, Ambiguity]
-- [ ] CHK006 - Is the "main program" label for the top-level frame explicitly classified as tool text (translated) rather than Python's `<module>`? [Clarity, Spec §FR-006]
-- [ ] CHK007 - Are requirements defined for the wording of the beta suffix itself (one word per active language vs the word in each language's own name)? [Completeness, Spec §FR-014, Gap]
-- [ ] CHK008 - Does the spec say which language the "Report a translation problem" issue form on the tracker is written in, and whether reporters may write in any language? [Completeness, Spec §FR-015, Gap]
+- [x] CHK001 - Is "tool-provided text" defined in one authoritative place (an inventory or rule), so that FR-004 can be judged complete without reading the code? [Completeness, Spec §FR-004, Gap]
+- [x] CHK002 - Does the spec say whether the product name "Snake Tutor" is ever translated, given that FR-004 requires the tab "title suffix" to be translated? [Clarity, Spec §FR-004, Ambiguity]
+- [x] CHK003 - Does the spec say whether the page description shown to search engines and link previews is part of the translated text? [Completeness, Gap]
+- [x] CHK004 - Are requirements stated for text that comes from the browser rather than the tool, such as the OK/Cancel buttons of confirmation dialogs and the file-picker labels, which FR-004's "confirmation dialogs" seems to cover? [Conflict, Spec §FR-004]
+- [x] CHK005 - Does the spec say whether the variable *type* names (`int`, `str`, `list`) and the `<function greet>` representation in the Memory panel count as Python text (never translated) or tool text? [Clarity, Spec §FR-006, Ambiguity]
+- [x] CHK006 - Is the "main program" label for the top-level frame explicitly classified as tool text (translated) rather than Python's `<module>`? [Clarity, Spec §FR-006]
+- [x] CHK007 - Are requirements defined for the wording of the beta suffix itself (one word per active language vs the word in each language's own name)? [Completeness, Spec §FR-014, Gap]
+- [x] CHK008 - Does the spec say which language the "Report a translation problem" issue form on the tracker is written in, and whether reporters may write in any language? [Completeness, Spec §FR-015, Gap]
 
 ## Requirement Clarity: wording and terminology
 
-- [ ] CHK009 - Is the form of address (tu/vous, du/Sie, tu/você, du/Dir) specified per language, or explicitly left to the translator with a consistency rule? [Clarity, Gap]
-- [ ] CHK010 - Are punctuation and typography conventions specified per language, such as the French space before `?` and `:`, and the quote styles « », „ “ and " "? [Clarity, Gap]
-- [ ] CHK011 - Is "match the names Visual Studio Code uses" tied to a specific source and version of the VS Code translations, so that it can be checked repeatably? [Clarity, Spec §FR-005]
-- [ ] CHK012 - Does FR-005 say whether "debug control names" also covers related terms VS Code translates (call stack, breakpoint, variables, debug console), or only the six buttons? [Clarity, Spec §FR-005, Ambiguity]
-- [ ] CHK013 - Is it specified how a VS Code name that is unclear to beginners (e.g. Brazilian "Contornar" for Step Over) should be handled, given the conflict between Principle I's "plain language" and FR-005's "match VS Code"? [Conflict, Spec §FR-005]
-- [ ] CHK014 - Is a reference glossary required for the two languages that have no VS Code translation (pt-PT, lb), so that the project's own terms are recorded somewhere the spec can point to? [Gap, Spec §Assumptions]
-- [ ] CHK015 - Is "plain-language explanation" (US1 scenario 3) defined with criteria a reviewer can apply in every language, such as reading level, no jargon, and naming the line? [Clarity, Spec §US1]
-- [ ] CHK016 - Is "fluent speaker" defined (native speaker, professional, project member), so that SC-006 and FR-014 have an objective threshold? [Clarity, Spec §SC-006, Ambiguity]
+- [x] CHK009 - Is the form of address (tu/vous, du/Sie, tu/você, du/Dir) specified per language, or explicitly left to the translator with a consistency rule? [Clarity, Gap]
+- [x] CHK010 - Are punctuation and typography conventions specified per language, such as the French space before `?` and `:`, and the quote styles « », „ “ and " "? [Clarity, Gap]
+- [x] CHK011 - Is "match the names Visual Studio Code uses" tied to a specific source and version of the VS Code translations, so that it can be checked repeatably? [Clarity, Spec §FR-005]
+- [x] CHK012 - Does FR-005 say whether "debug control names" also covers related terms VS Code translates (call stack, breakpoint, variables, debug console), or only the six buttons? [Clarity, Spec §FR-005, Ambiguity]
+- [x] CHK013 - Is it specified how a VS Code name that is unclear to beginners (e.g. Brazilian "Contornar" for Step Over) should be handled, given the conflict between Principle I's "plain language" and FR-005's "match VS Code"? [Conflict, Spec §FR-005]
+- [x] CHK014 - Is a reference glossary required for the two languages that have no VS Code translation (pt-PT, lb), so that the project's own terms are recorded somewhere the spec can point to? [Gap, Spec §Assumptions]
+- [x] CHK015 - Is "plain-language explanation" (US1 scenario 3) defined with criteria a reviewer can apply in every language, such as reading level, no jargon, and naming the line? [Clarity, Spec §US1]
+- [x] CHK016 - Is "fluent speaker" defined (native speaker, professional, project member), so that SC-006 and FR-014 have an objective threshold? [Clarity, Spec §SC-006, Ambiguity]
 
 ## Requirement Consistency
 
-- [ ] CHK017 - Is the label of the automatic entry consistent between FR-002 ("Automatic (system)") and the clarification and plan ("Automatic ({language})" showing the language in effect)? [Conflict, Spec §FR-002, Spec §Clarifications]
-- [ ] CHK018 - Is FR-002's "show which language is in effect while on Automatic" consistent with naming the *system's* language even while an explicit language is chosen? [Consistency, Spec §FR-002]
-- [ ] CHK019 - Does SC-001's "0 tool-provided texts in another language" agree with the Edge Case that console lines already printed are *not* re-translated after a switch? [Conflict, Spec §SC-001, Spec §Edge Cases]
-- [ ] CHK020 - Does FR-010 (missing text falls back to English) agree with SC-001 (0 texts in another language), and is it stated which wins at release? [Conflict, Spec §FR-010, Spec §SC-001]
-- [ ] CHK021 - Is "behaving identically across languages" (FR-011) consistent with the example printing different text per language, and is "identically" defined (same structure, same values, same pause lines)? [Ambiguity, Spec §FR-011]
-- [ ] CHK022 - Does the Edge Case "Longer translations (German, Portuguese)" match the plan's finding that Italian and Luxembourgish are also among the longest, or is the list meant to be exhaustive? [Consistency, Spec §Edge Cases]
-- [ ] CHK023 - Are the language display names in FR-002 consistent with Key Entities and with the beta label format (e.g. "Português (Portugal) (beta)" with nested brackets)? [Consistency, Spec §FR-002, Spec §FR-014]
+- [x] CHK017 - Is the label of the automatic entry consistent between FR-002 ("Automatic (system)") and the clarification and plan ("Automatic ({language})" showing the language in effect)? [Conflict, Spec §FR-002, Spec §Clarifications]
+- [x] CHK018 - Is FR-002's "show which language is in effect while on Automatic" consistent with naming the *system's* language even while an explicit language is chosen? [Consistency, Spec §FR-002]
+- [x] CHK019 - Does SC-001's "0 tool-provided texts in another language" agree with the Edge Case that console lines already printed are *not* re-translated after a switch? [Conflict, Spec §SC-001, Spec §Edge Cases]
+- [x] CHK020 - Does FR-010 (missing text falls back to English) agree with SC-001 (0 texts in another language), and is it stated which wins at release? [Conflict, Spec §FR-010, Spec §SC-001]
+- [x] CHK021 - Is "behaving identically across languages" (FR-011) consistent with the example printing different text per language, and is "identically" defined (same structure, same values, same pause lines)? [Ambiguity, Spec §FR-011]
+- [x] CHK022 - Does the Edge Case "Longer translations (German, Portuguese)" match the plan's finding that Italian and Luxembourgish are also among the longest, or is the list meant to be exhaustive? [Consistency, Spec §Edge Cases]
+- [x] CHK023 - Are the language display names in FR-002 consistent with Key Entities and with the beta label format (e.g. "Português (Portugal) (beta)" with nested brackets)? [Consistency, Spec §FR-002, Spec §FR-014]
 
 ## Acceptance Criteria Quality
 
-- [ ] CHK024 - Is SC-006's "no open reports of misleading terms" measurable, with a defined review window, a definition of "misleading", and someone responsible for closing reports? [Measurability, Spec §SC-006]
-- [ ] CHK025 - Is "core debugging concepts" (SC-006) enumerated? [Clarity, Spec §SC-006, Gap]
-- [ ] CHK026 - Is there an acceptance criterion for translation *quality* (accuracy, register, terminology) as opposed to completeness, for the period before fluent-speaker review? [Gap, Spec §SC-001]
-- [ ] CHK027 - Can US1 scenario 4 ("a screen reader reads the controls…") be checked objectively, with a named screen reader and browser, or a stated equivalent check? [Measurability, Spec §US1]
-- [ ] CHK028 - Is SC-007's "at most 2 interactions" measured from a defined starting point (the main screen with a beta language already active)? [Clarity, Spec §SC-007]
+- [x] CHK024 - Is SC-006's "no open reports of misleading terms" measurable, with a defined review window, a definition of "misleading", and someone responsible for closing reports? [Measurability, Spec §SC-006]
+- [x] CHK025 - Is "core debugging concepts" (SC-006) enumerated? [Clarity, Spec §SC-006, Gap]
+- [x] CHK026 - Is there an acceptance criterion for translation *quality* (accuracy, register, terminology) as opposed to completeness, for the period before fluent-speaker review? [Gap, Spec §SC-001]
+- [x] CHK027 - Can US1 scenario 4 ("a screen reader reads the controls…") be checked objectively, with a named screen reader and browser, or a stated equivalent check? [Measurability, Spec §US1]
+- [x] CHK028 - Is SC-007's "at most 2 interactions" measured from a defined starting point (the main screen with a beta language already active)? [Clarity, Spec §SC-007]
 
 ## Accessibility Requirements
 
-- [ ] CHK029 - Are accessible-name requirements stated for the language selector itself (its label, and how the current choice and the beta status are announced)? [Gap, Spec §FR-002]
-- [ ] CHK030 - Is keyboard operation of the language selector and the report link required, and consistent with the keyboard focus of the existing controls? [Coverage, Gap]
-- [ ] CHK031 - Does the spec require each language's own name to be marked with that language (so "Deutsch" in the menu is pronounced as German while the page is in French), or explicitly accept the alternative? [Gap, Spec §FR-009]
-- [ ] CHK032 - Are requirements defined for announcing a language change to assistive technology when the interface switches without a reload? [Gap, Spec §FR-003]
-- [ ] CHK033 - Is it specified whether the report link must tell users it opens a new window or tab? [Gap, Spec §FR-015]
-- [ ] CHK034 - Are colour-contrast requirements stated for the new selector and the beta/report text in both light and dark themes? [Gap, Non-Functional]
-- [ ] CHK035 - Does FR-009 say which language codes the page must declare (`pt-PT` vs `pt`, `lb`)? [Clarity, Spec §FR-009]
+- [x] CHK029 - Are accessible-name requirements stated for the language selector itself (its label, and how the current choice and the beta status are announced)? [Gap, Spec §FR-002]
+- [x] CHK030 - Is keyboard operation of the language selector and the report link required, and consistent with the keyboard focus of the existing controls? [Coverage, Gap]
+- [x] CHK031 - Does the spec require each language's own name to be marked with that language (so "Deutsch" in the menu is pronounced as German while the page is in French), or explicitly accept the alternative? [Gap, Spec §FR-009]
+- [x] CHK032 - Are requirements defined for announcing a language change to assistive technology when the interface switches without a reload? [Gap, Spec §FR-003]
+- [x] CHK033 - Is it specified whether the report link must tell users it opens a new window or tab? [Gap, Spec §FR-015]
+- [x] CHK034 - Are colour-contrast requirements stated for the new selector and the beta/report text in both light and dark themes? [Gap, Non-Functional]
+- [x] CHK035 - Does FR-009 say which language codes the page must declare (`pt-PT` vs `pt`, `lb`)? [Clarity, Spec §FR-009]
 
 ## Layout Requirements
 
-- [ ] CHK036 - Are the "supported desktop window sizes" in SC-005 and the Edge Cases defined in the spec itself, rather than only in the plan (1280×800, 1024×768)? [Clarity, Spec §SC-005, Gap]
-- [ ] CHK037 - Is it specified which layout responses are acceptable for long text (wrapping onto a second row, abbreviating, tooltips only), and which are not (clipping, ellipsis on control names)? [Clarity, Spec §SC-005]
-- [ ] CHK038 - Do the layout requirements cover the language selector's own width (long entries such as "Automático (Português (Brasil))") and how it is truncated, if at all? [Coverage, Spec §FR-002]
-- [ ] CHK039 - Are layout requirements defined for browser zoom or larger default font sizes in each language? [Gap, Non-Functional]
-- [ ] CHK040 - Is it stated whether narrow and mobile widths are out of scope for this feature, given that the constitution lists desktop browsers only? [Assumption, Gap]
+- [x] CHK036 - Are the "supported desktop window sizes" in SC-005 and the Edge Cases defined in the spec itself, rather than only in the plan (1280×800, 1024×768)? [Clarity, Spec §SC-005, Gap]
+- [x] CHK037 - Is it specified which layout responses are acceptable for long text (wrapping onto a second row, abbreviating, tooltips only), and which are not (clipping, ellipsis on control names)? [Clarity, Spec §SC-005]
+- [x] CHK038 - Do the layout requirements cover the language selector's own width (long entries such as "Automático (Português (Brasil))") and how it is truncated, if at all? [Coverage, Spec §FR-002]
+- [x] CHK039 - Are layout requirements defined for browser zoom or larger default font sizes in each language? [Gap, Non-Functional]
+- [x] CHK040 - Is it stated whether narrow and mobile widths are out of scope for this feature, given that the constitution lists desktop browsers only? [Assumption, Gap]
 
 ## Privacy & Reporting Requirements
 
-- [ ] CHK041 - Is "MUST NOT send the learner's script or any other data" (FR-015) reconciled with the locale code being placed in the report URL on purpose? [Conflict, Spec §FR-015]
-- [ ] CHK042 - Does the spec address what the third-party tracker inevitably receives when the link is followed (IP address, the referrer unless suppressed, the user's account if signed in), and whether the user must be told? [Gap, Spec §FR-015]
-- [ ] CHK043 - Is it specified that reporting requires a tracker account, and is an alternative channel required for learners without one? [Gap, Spec §FR-015, Assumption]
-- [ ] CHK044 - Does the spec require guidance in the report flow warning against pasting private code, in line with Constitution IV? [Gap, Spec §FR-015]
-- [ ] CHK045 - Is the "remembered locally" requirement (FR-008) explicit about what is stored (only the language code) and that it is never combined with or sent alongside the stored script? [Clarity, Spec §FR-008]
-- [ ] CHK046 - Is it stated whether the report link should also be offered for reviewed (non-beta) languages, or deliberately hidden so it doesn't invite contact? [Coverage, Spec §FR-015]
+- [x] CHK041 - Is "MUST NOT send the learner's script or any other data" (FR-015) reconciled with the locale code being placed in the report URL on purpose? [Conflict, Spec §FR-015]
+- [x] CHK042 - Does the spec address what the third-party tracker inevitably receives when the link is followed (IP address, the referrer unless suppressed, the user's account if signed in), and whether the user must be told? [Gap, Spec §FR-015]
+- [x] CHK043 - Is it specified that reporting requires a tracker account, and is an alternative channel required for learners without one? [Gap, Spec §FR-015, Assumption]
+- [x] CHK044 - Does the spec require guidance in the report flow warning against pasting private code, in line with Constitution IV? [Gap, Spec §FR-015]
+- [x] CHK045 - Is the "remembered locally" requirement (FR-008) explicit about what is stored (only the language code) and that it is never combined with or sent alongside the stored script? [Clarity, Spec §FR-008]
+- [x] CHK046 - Is it stated whether the report link should also be offered for reviewed (non-beta) languages, or deliberately hidden so it doesn't invite contact? [Coverage, Spec §FR-015]
 
 ## Scenario & Edge Case Coverage
 
-- [ ] CHK047 - Are requirements defined for which language the startup-failure screen uses when it appears before or without a saved choice? [Coverage, Spec §FR-004]
-- [ ] CHK048 - Are requirements defined for messages that interpolate learner-controlled text (file names, exception type names), and for how that text is kept separate from translated wording? [Coverage, Spec §FR-006, Gap]
-- [ ] CHK049 - Are plural rules required for messages that contain counts (e.g. "… N more"), including languages whose plural categories differ from English? [Gap]
-- [ ] CHK050 - Does the spec define what the example program does when the learner's input contains non-Latin characters or is empty? [Edge Case, Spec §FR-011, Gap]
-- [ ] CHK051 - Is the behaviour defined when the learner has an unedited example in one language and switches language: should the example be replaced, kept, or offered? [Coverage, Spec §FR-012, Ambiguity]
-- [ ] CHK052 - Are requirements defined for an error *without* a line number (e.g. an error raised during startup) in every language's explanation? [Edge Case, Spec §US1]
+- [x] CHK047 - Are requirements defined for which language the startup-failure screen uses when it appears before or without a saved choice? [Coverage, Spec §FR-004]
+- [x] CHK048 - Are requirements defined for messages that interpolate learner-controlled text (file names, exception type names), and for how that text is kept separate from translated wording? [Coverage, Spec §FR-006, Gap]
+- [x] CHK049 - Are plural rules required for messages that contain counts (e.g. "… N more"), including languages whose plural categories differ from English? [Gap]
+- [x] CHK050 - Does the spec define what the example program does when the learner's input contains non-Latin characters or is empty? [Edge Case, Spec §FR-011, Gap]
+- [x] CHK051 - Is the behaviour defined when the learner has an unedited example in one language and switches language: should the example be replaced, kept, or offered? [Coverage, Spec §FR-012, Ambiguity]
+- [x] CHK052 - Are requirements defined for an error *without* a line number (e.g. an error raised during startup) in every language's explanation? [Edge Case, Spec §US1]
 
 ## Translation Upkeep & Dependencies
 
-- [ ] CHK053 - Does FR-013 ("only supplying its translations") say what a complete translation consists of: every message, the example program, display name, review status? [Completeness, Spec §FR-013]
-- [ ] CHK054 - Are requirements defined for what happens when English text changes or new text is added after release (must all languages be updated in the same change, or may they fall back to English and be flagged)? [Gap, Spec §FR-010, Spec §FR-013]
-- [ ] CHK055 - Is the review process behind FR-016 specified: who may mark a translation reviewed, what evidence is needed, and whether a later change makes a language beta again? [Gap, Spec §FR-016]
-- [ ] CHK056 - Is it specified whether a language may be withdrawn or hidden if its translation is found to be misleading, and what learners with that saved choice then see? [Gap, Recovery]
-- [ ] CHK057 - Is the dependency on VS Code's translations recorded with its licence and a policy for VS Code renaming a term later? [Dependency, Spec §FR-005, Gap]
-- [ ] CHK058 - Is the assumption that one European Portuguese text suits all non-Brazilian Portuguese regions (pt-AO, pt-MZ…) recorded as an assumption with a way to revisit it? [Assumption, Spec §Edge Cases]
-- [ ] CHK059 - Is the exclusion of other regional variants (fr-CA, de-CH, it-CH) consistent with including two Portuguese variants, and is the reasoning recorded? [Consistency, Spec §Assumptions]
-- [ ] CHK060 - Is it stated that the README and documentation stay English-only, and is there a requirement for translators (or reporters) to be able to find the contribution guidance? [Coverage, Spec §Assumptions]
+- [x] CHK053 - Does FR-013 ("only supplying its translations") say what a complete translation consists of: every message, the example program, display name, review status? [Completeness, Spec §FR-013]
+- [x] CHK054 - Are requirements defined for what happens when English text changes or new text is added after release (must all languages be updated in the same change, or may they fall back to English and be flagged)? [Gap, Spec §FR-010, Spec §FR-013]
+- [x] CHK055 - Is the review process behind FR-016 specified: who may mark a translation reviewed, what evidence is needed, and whether a later change makes a language beta again? [Gap, Spec §FR-016]
+- [x] CHK056 - Is it specified whether a language may be withdrawn or hidden if its translation is found to be misleading, and what learners with that saved choice then see? [Gap, Recovery]
+- [x] CHK057 - Is the dependency on VS Code's translations recorded with its licence and a policy for VS Code renaming a term later? [Dependency, Spec §FR-005, Gap]
+- [x] CHK058 - Is the assumption that one European Portuguese text suits all non-Brazilian Portuguese regions (pt-AO, pt-MZ…) recorded as an assumption with a way to revisit it? [Assumption, Spec §Edge Cases]
+- [x] CHK059 - Is the exclusion of other regional variants (fr-CA, de-CH, it-CH) consistent with including two Portuguese variants, and is the reasoning recorded? [Consistency, Spec §Assumptions]
+- [x] CHK060 - Is it stated that the README and documentation stay English-only, and is there a requirement for translators (or reporters) to be able to find the contribution guidance? [Coverage, Spec §Assumptions]
 
 ## Notes
 
@@ -109,3 +109,30 @@ covered where they overlap these areas.
 - `checklists/requirements.md` has a separate built-in lifecycle maintained by `/speckit-specify` and `/speckit-clarify`
 - Items tagged `[Conflict]` (CHK004, CHK013, CHK017, CHK019, CHK020, CHK041) are the most likely to need a spec change before sign-off
 - The feature is already implemented; a requirement fixed here may also need a matching code change, which belongs in a follow-up task
+
+## Review Findings (2026-10-03)
+
+Assessed against spec.md after the second clarification session: 20/60 passed, then 37/60 after the wording fixes below. Passing items rely on:
+FR-004 (CHK001, CHK004), FR-017 (CHK009), FR-005 (CHK013), Assumptions "fluent speaker"
+(CHK016), FR-002 (CHK017, CHK018), SC-001/FR-010 (CHK019, CHK020, CHK054), SC-007 (CHK028),
+FR-015 (CHK033, CHK041–CHK043, CHK046), FR-004 + FR-007 (CHK047), FR-012 (CHK051),
+Key Entities (CHK053), FR-016 (CHK055).
+
+Wording-only items added to spec.md on 2026-10-03 (now passing, 17): CHK002, CHK003, CHK005,
+CHK006 (FR-004, FR-006), CHK007, CHK023 (FR-014), CHK008, CHK044 (FR-015), CHK011, CHK012
+(FR-005), CHK022, CHK048, CHK052 (Edge Cases), CHK035 (FR-009), CHK036 (SC-005), CHK040
+(Assumptions), CHK045 (FR-008).
+
+Resolved by the clarification session of 2026-10-03 (now passing, 11): CHK027 (US1 scenario 4),
+CHK029–CHK032 (FR-018), CHK034, CHK039 (SC-008), CHK037, CHK038 (SC-005), CHK024, CHK025
+(SC-006). Running total: 48/60.
+
+Resolved by the second clarification session of 2026-10-03 (now passing, 12): CHK015, CHK026
+(FR-019), CHK056 (FR-016), CHK010, CHK014 (FR-020), CHK021 (FR-011), CHK057 (FR-005,
+Assumptions), and as wording that matches the live app: CHK049, CHK050 (Edge Cases), CHK058,
+CHK059, CHK060 (Assumptions). Running total: 60/60.
+
+Follow-up work these requirements create (not part of this checklist): mark selector entries
+with their own language and announce language changes (FR-018); verify 200% zoom and the two
+screen readers (SC-008, US1 scenario 4); rewrite the startup-failure text to meet FR-019;
+write the six style guides (FR-020).

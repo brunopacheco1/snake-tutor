@@ -87,7 +87,28 @@ the prompt and both printed lines are in that language, the identifiers are the 
 English, and the output shape is the same.
 Edit the script, then switch language: the script is not replaced.
 
-## 8. Accessibility (US1 scenario 4, FR-009)
+### 5a. 200% zoom (SC-008)
 
-With VoiceOver or NVDA, tab through the toolbar and the language selector in French. The
-announced names are French, and the page language is announced or used for pronunciation.
+At 1024×768 with the browser zoomed to 200%, for each locale: the language selector, the beta
+label and the report link are fully visible and don't overlap anything (the header may wrap
+onto several rows).
+
+*Result 2026-10-03:* passed in all 7 locales (checked with page zoom 2 in Chrome). Header height
+grows to at most about 316 px (Luxembourgish). Outside this feature: at 200% the right-hand pane
+(debug buttons, console) extends past the window and needs horizontal scrolling in every
+language, English included.
+
+## 8. Accessibility (US1 scenario 4, FR-009, FR-018)
+
+Run with **VoiceOver on Safari** and with **NVDA on Firefox**, in at least French and
+Luxembourgish:
+
+1. Tab to the toolbar: each button's name is read in the active language.
+2. Tab to the language selector: it's announced as "Langue" / "Sprooch", with its current value.
+3. Open it with the arrow keys: each language name is pronounced in its own language (e.g.
+   "Deutsch" as German), and beta entries say "(bêta)" / "(Beta)".
+4. Choose another language with Enter: the screen reader says "Langue : Français" or
+   "Sprooch: Lëtzebuergesch" once, and focus stays on the selector.
+5. The page language (`<html lang>`) changes, so text afterwards is read with the new voice.
+
+*Result:* not yet run. This needs a person with these screen readers (task T059).

@@ -35,8 +35,14 @@ Spotted something wrong? Use **Report a translation problem** next to the menu, 
 
 - **Add a language**: copy [js/locales/en.js](js/locales/en.js) to `js/locales/<code>.js`, translate
   `messages` and `sample` (keep every key, `{placeholder}`, shortcut and the example's code
-  unchanged), import it in [js/i18n.js](js/i18n.js), then run `npm test` — the tests check that
-  nothing is missing and that the example still runs.
+  unchanged), write its style guide `js/locales/<code>.style.md` (form of address, punctuation,
+  core debugging terms — see e.g. [fr.style.md](js/locales/fr.style.md)), import the catalog in
+  [js/i18n.js](js/i18n.js), then run `npm test` — the tests check that nothing is missing and that
+  the example still runs.
+- **Style guides**: [fr](js/locales/fr.style.md) · [de](js/locales/de.style.md) ·
+  [it](js/locales/it.style.md) · [pt-PT](js/locales/pt-PT.style.md) ·
+  [pt-BR](js/locales/pt-BR.style.md) · [lb](js/locales/lb.style.md). Translations follow them;
+  reviews check against them.
 - **Review a language**: a fluent speaker reviews every text of the language — including the
   example program — in a pull request, and the maintainer merges the change that sets
   `reviewed: true` in its `meta`, which removes the beta label. Later edits to a reviewed language

@@ -25,6 +25,7 @@ export const messages = {
   "lang.beta": "{language} (bêta)",
   "lang.report": "Signaler un problème de traduction",
   "lang.reportTitle": "Ouvre GitHub dans un nouvel onglet — il te faut un compte GitHub pour signaler un problème",
+  "lang.changed": "Langue : {language}",
   "controls.label": "Commandes de débogage",
   "controls.start": "Démarrer",
   "controls.startTitle": "Démarrer (F5) — exécuter le programme depuis le début",
@@ -78,20 +79,20 @@ export const messages = {
   "vars.more": {"one": "… et {count} de plus", "other": "… et {count} de plus"},
   "editor.breakpointTitle": "Point d’arrêt (clique pour le supprimer)",
   "blocker.title": "Snake Tutor ne peut pas démarrer dans cette fenêtre du navigateur",
-  "blocker.fromDiskHtml": "La page a été ouverte directement depuis ton disque. Sers plutôt le dossier avec un serveur, par exemple avec <code>python3 -m http.server</code>, puis ouvre <code>http://localhost:8000</code>.",
-  "blocker.isolation": "Snake Tutor exécute Python dans ton navigateur et a besoin d’une fonctionnalité appelée isolation cross-origin, qu’un petit assistant (un service worker) active au premier chargement de la page. Elle ne s’est pas activée ici. Recharge la page et évite les fenêtres de navigation privée, qui bloquent cet assistant.",
+  "blocker.fromDiskHtml": "Cette page a été ouverte directement depuis un fichier, donc Python ne peut pas fonctionner. Ouvre-la plutôt par une adresse web : lance <code>python3 -m http.server</code> dans son dossier, puis ouvre <code>http://localhost:8000</code>.",
+  "blocker.isolation": "Snake Tutor n’a pas pu activer une fonction du navigateur dont il a besoin pour exécuter Python. Recharge la page et évite les fenêtres de navigation privée.",
   "blocker.reload": "Recharger",
 };
 
-export const sample = `# Bienvenue dans Snake Tutor !
+export const sample = `# Bienvenue dans Snake Tutor !
 # Appuie sur « Démarrer » (F5), puis sur « Pas à pas principal » (F10) pour exécuter une ligne à la fois.
 # Observe la ligne surlignée et le panneau Mémoire au fur et à mesure.
 
 def greet(name):
-    message = "Bonjour, " + name + " !"
+    message = "Bonjour, " + name + " !"
     return message
 
-name = input("Comment t’appelles-tu ? ")
+name = input("Comment t’appelles-tu ? ")
 print(greet(name))
 
 numbers = [3, 1, 4, 1, 5]

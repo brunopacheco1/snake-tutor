@@ -25,6 +25,7 @@ export const messages = {
   "lang.beta": "{language} (beta)",
   "lang.report": "Relatar um problema de tradução",
   "lang.reportTitle": "Abre o GitHub em uma nova aba — você precisa de uma conta no GitHub para relatar",
+  "lang.changed": "Idioma: {language}",
   "controls.label": "Controles de depuração",
   "controls.start": "Iniciar",
   "controls.startTitle": "Iniciar (F5) — executar o programa desde o começo",
@@ -78,8 +79,8 @@ export const messages = {
   "vars.more": {"one": "… mais {count}", "other": "… mais {count}"},
   "editor.breakpointTitle": "Ponto de parada (clique para remover)",
   "blocker.title": "O Snake Tutor não pode iniciar nesta janela do navegador",
-  "blocker.fromDiskHtml": "A página foi aberta diretamente do seu disco. Em vez disso, sirva a pasta com um servidor, por exemplo com <code>python3 -m http.server</code>, e abra <code>http://localhost:8000</code>.",
-  "blocker.isolation": "O Snake Tutor executa o Python dentro do seu navegador e precisa de um recurso chamado isolamento de origem cruzada (cross-origin isolation), que um pequeno ajudante (um service worker) ativa na primeira vez que a página carrega. Ele não foi ativado aqui. Tente recarregar e evite janelas privadas / anônimas, que bloqueiam o ajudante.",
+  "blocker.fromDiskHtml": "Esta página foi aberta diretamente de um arquivo, então o Python não pode funcionar. Abra-a por um endereço web: execute <code>python3 -m http.server</code> na pasta dela e depois abra <code>http://localhost:8000</code>.",
+  "blocker.isolation": "O Snake Tutor não conseguiu ativar um recurso do navegador de que precisa para executar o Python. Recarregue a página e evite janelas privadas ou anônimas.",
   "blocker.reload": "Recarregar",
 };
 
