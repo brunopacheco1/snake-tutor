@@ -47,14 +47,14 @@ function stream(type) {
 
 async function boot(message) {
   ({ control, data, interrupt } = message);
-  post({ type: "status", text: "Downloading Python…" });
+  post({ type: "status", key: "status.downloading" });
   pyodide = await loadPyodide({ indexURL: INDEX_URL });
   pyodide.setInterruptBuffer(interrupt);
   pyodide.setStdout(stream("stdout"));
   pyodide.setStderr(stream("stderr"));
   pyodide.registerJsModule("tutor_host", { emit, wait });
 
-  post({ type: "status", text: "Starting debugger…" });
+  post({ type: "status", key: "status.startingDebugger" });
   const source = await (await fetch(new URL("../py/tutor_debugger.py", self.location.href))).text();
   pyodide.FS.mkdirTree("/tutor");
   pyodide.FS.writeFile("/tutor/tutor_debugger.py", source);

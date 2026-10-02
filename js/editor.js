@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // CodeMirror 5 wrapper: script text, breakpoints and debug line markers.
 /* global CodeMirror */
+import { t } from "./i18n.js";
 
 export function createEditor(element, { onChange, onBreakpointsChange }) {
   const cm = CodeMirror(element, {
@@ -23,7 +24,8 @@ export function createEditor(element, { onChange, onBreakpointsChange }) {
   function marker() {
     const dot = document.createElement("div");
     dot.className = "breakpoint";
-    dot.title = "Breakpoint (click to remove)";
+    dot.dataset.i18nTitle = "editor.breakpointTitle";
+    dot.title = t("editor.breakpointTitle");
     return dot;
   }
 

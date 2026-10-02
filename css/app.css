@@ -168,6 +168,40 @@ body {
 }
 .spacer { flex: 1; }
 
+/* Longer translations may push the header onto two rows rather than clipping it. */
+.pane-header { flex-wrap: wrap; row-gap: 4px; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.lang select {
+  height: 30px;
+  max-width: 14em;
+  padding: 0 6px;
+  font: 500 13px var(--sans);
+  color: var(--text);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  text-overflow: ellipsis;
+}
+.lang select:hover { background: var(--surface-2); }
+.lang select:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.lang option { color: var(--text); background: var(--surface); }
+.lang-report {
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.lang-report:hover { color: var(--accent); }
+
 /* ---------------------------------------------------------------- buttons */
 
 .btn {
@@ -352,6 +386,7 @@ body {
 .var-value { overflow-wrap: anywhere; }
 .var-row.changed { animation: flash 1.2s ease-out; background: var(--changed-bg); }
 @keyframes flash { from { background: var(--current-edge); } }
+.no-flash .var-row.changed { animation: none; }
 details > summary { list-style: none; cursor: pointer; }
 details > summary::-webkit-details-marker { display: none; }
 details > summary .var-row::before {

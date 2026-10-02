@@ -5,26 +5,15 @@ import { Cmd, Runner } from "./runner.js";
 import { createEditor } from "./editor.js";
 import { createConsole } from "./console.js";
 import { createVariables } from "./variables.js";
+import * as i18n from "./i18n.js";
+
+const { t } = i18n;
+
+// Before anything renders: pick the saved language, or follow the system's.
+i18n.init();
 
 const STORAGE_KEY = "snake-tutor:v1";
 const MAX_FILE_BYTES = 1024 * 1024;
-const SAMPLE = `# Welcome to Snake Tutor!
-# Press "Start" (F5), then "Step Over" (F10) to run one line at a time.
-# Watch the highlighted line and the Memory panel as you go.
-
-def greet(name):
-    message = "Hello, " + name + "!"
-    return message
-
-name = input("What is your name? ")
-print(greet(name))
-
-numbers = [3, 1, 4, 1, 5]
-total = 0
-for n in numbers:
-    total = total + n
-print("The total is", total)
-`;
 
 const $ = (id) => document.getElementById(id);
 const buttons = {
@@ -71,8 +60,12 @@ function selectFrame(index) {
 
 // ---------------------------------------------------------------- state
 
-function setStatus(html) {
-  $("status").innerHTML = html;
+// The status is kept as a function so a language switch can redraw it in place.
+let statusView = () => "";
+
+function setStatus(view) {
+  statusView = view;
+  $("status").innerHTML = view();
 }
 
 function setState(next) {
@@ -94,20 +87,25 @@ function render() {
     stop: active(),
   };
   for (const [name, button] of Object.entries(buttons)) button.disabled = !enabled[name];
-  $("continue-label").textContent = state === "paused" ? "Continue" : "Start";
-  buttons.continue.title = state === "paused" ? "Continue (F5) — run to the next breakpoint" : "Start (F5)";
+  $("continue-label").textContent = t(state === "paused" ? "controls.continue" : "controls.start");
+  buttons.continue.title = t(state === "paused" ? "controls.continueTitle" : "controls.startTitle");
   editor.setReadOnly(active());
 
   if (state === "running") editor.setCurrentLine(null);
   if (state === "loading") return;
   if (state === "idle") {
-    setStatus(`Ready — press <strong>Start</strong> (F5) to debug. <span class="muted-inline">Python ${pythonVersion}</span>`);
+    setStatus(
+      () =>
+        `${t("status.readyHtml", { start: t("controls.start") })} ` +
+        `<span class="muted-inline">${t("status.pythonVersion", { version: pythonVersion })}</span>`,
+    );
   } else if (state === "running") {
-    setStatus("<strong>Running…</strong> press Stop (Shift+F5) to end the program.");
+    setStatus(() => t("status.runningHtml", { stop: t("controls.stop") }));
   } else if (state === "paused") {
-    setStatus(`<strong>Paused before line ${pause.line}.</strong> Step Over (F10) runs it.`);
+    const line = pause.line;
+    setStatus(() => t("status.pausedHtml", { line, stepOver: t("controls.stepOver") }));
   } else if (state === "input") {
-    setStatus("<strong>Waiting for input</strong> — type in the Console and press Enter.");
+    setStatus(() => t("status.inputHtml"));
   }
 }
 
@@ -141,10 +139,10 @@ function stop() {
   stopTimer = setTimeout(() => {
     // Python did not respond (e.g. stuck inside a long built-in call): start a fresh one.
     terminal.cancelInput();
-    terminal.system("Program stopped.");
+    terminal.system(t("console.stopped"));
     editor.clearMarks();
     variables.reset();
-    setStatus("Restarting Python…");
+    setStatus(() => t("status.restarting"));
     setState("loading");
     runner.hardReset();
   }, 2000);
@@ -164,7 +162,7 @@ function restart() {
 function onMessage(message) {
   switch (message.type) {
     case "status":
-      setStatus(message.text);
+      setStatus(() => t(message.key));
       break;
     case "ready":
       pythonVersion = message.version;
@@ -182,6 +180,7 @@ function onMessage(message) {
       if (active()) setState("running");
       break;
     case "paused":
+      $("variables").classList.remove("no-flash");
       pause = message;
       selectedFrame = 0;
       variables.update(message, 0);
@@ -201,8 +200,8 @@ function onMessage(message) {
       finish(message);
       break;
     case "fatal":
-      terminal.system(`Could not start Python: ${message.text}. Check your internet connection and reload the page.`);
-      setStatus("<strong>Python failed to load.</strong> Reload the page to try again.");
+      terminal.system(t("console.fatal", { error: message.text }));
+      setStatus(() => t("status.pythonFailedHtml"));
       break;
   }
 }
@@ -214,23 +213,22 @@ function finish(message) {
   pause = null;
   variables.reset();
   if (message.status === "ok") {
-    terminal.system("Program finished.");
+    terminal.system(t("console.finished"));
   } else if (message.status === "stopped") {
-    terminal.system("Program stopped.");
+    terminal.system(t("console.stopped"));
   } else {
     const line = message.error && message.error.line;
-    const where = line ? ` on line ${line}` : "";
+    const kind = /^(Syntax|Indentation|Tab)Error$/.test(message.error.type) ? "syntaxError" : "runtimeError";
     editor.setErrorLine(line);
-    terminal.system(
-      /^(Syntax|Indentation|Tab)Error$/.test(message.error.type)
-        ? `Python could not understand the code${where}, so the program did not start (see the red message above).`
-        : `The program stopped because of an error${where} (see the red message above).`,
-    );
+    terminal.system(t(`console.${kind}${line ? "AtLine" : ""}`, { line }));
   }
   setState("idle");
   if (message.status === "error") {
+    // The exception type is Python's own text and is never translated.
     const { type, line } = message.error;
-    setStatus(`<strong>${type}</strong>${line ? ` on line ${line}` : ""}. Fix it and press Start (F5) again.`);
+    setStatus(() =>
+      t(line ? "status.errorAtLineHtml" : "status.errorHtml", { type, line, start: t("controls.start") }),
+    );
   }
   if (restartPending) {
     restartPending = false;
@@ -277,7 +275,7 @@ function scheduleSave() {
 function setFileName(name) {
   fileName = name || "main.py";
   $("file-name").textContent = fileName;
-  document.title = `${fileName} — Snake Tutor`;
+  document.title = t("title.file", { file: fileName });
 }
 
 function loadScript(name, source, breakpoints = []) {
@@ -296,21 +294,21 @@ function restore() {
   } catch {
     // fall through to the sample
   }
-  loadScript("main.py", SAMPLE);
+  loadScript("main.py", i18n.sample());
 }
 
 async function openFile(file) {
   if (!file) return;
   if (active()) {
-    terminal.system("Stop the program before opening another file.");
+    terminal.system(t("file.stopFirst"));
     return;
   }
   if (!/\.py$/i.test(file.name) && file.type && !file.type.startsWith("text/")) {
-    terminal.system(`"${file.name}" is not a Python (.py) file.`);
+    terminal.system(t("file.notPython", { file: file.name }));
     return;
   }
   if (file.size > MAX_FILE_BYTES) {
-    terminal.system(`"${file.name}" is larger than 1 MB — please choose a smaller script.`);
+    terminal.system(t("file.tooLarge", { file: file.name }));
     return;
   }
   loadScript(file.name.replace(/\.[^.]*$/, "") + ".py", await file.text());
@@ -331,8 +329,8 @@ $("btn-download").addEventListener("click", () => {
 
 $("btn-sample").addEventListener("click", () => {
   if (active()) return;
-  if (editor.getValue() !== SAMPLE && !confirm("Replace your script with the example?")) return;
-  loadScript("main.py", SAMPLE);
+  if (!i18n.isAnySample(editor.getValue()) && !confirm(t("file.confirmReplace"))) return;
+  loadScript("main.py", i18n.sample());
 });
 
 const scriptPane = document.querySelector(".script-pane");
@@ -347,6 +345,46 @@ scriptPane.addEventListener("drop", (event) => {
   event.preventDefault();
   scriptPane.classList.remove("dragover");
   openFile(event.dataTransfer.files[0]);
+});
+
+// ---------------------------------------------------------------- language
+
+const langSelect = $("lang-select");
+const langReport = $("lang-report");
+const REPORT_URL = "https://github.com/brunopacheco1/snake-tutor/issues/new?template=translation.yml&labels=translation&title=";
+
+const languageLabel = (meta) => (i18n.isBeta(meta.code) ? t("lang.beta", { language: meta.name }) : meta.name);
+
+function renderLanguage() {
+  const pref = i18n.preference();
+  const systemMeta = i18n.LOCALES.find((meta) => meta.code === i18n.systemLocale());
+  // "Automatic" names the language it gives on this system (FR-002).
+  const auto = new Option(t("lang.auto", { language: systemMeta.name }), "auto", false, pref === "auto");
+  langSelect.replaceChildren(
+    auto,
+    ...i18n.LOCALES.map((meta) => new Option(languageLabel(meta), meta.code, false, meta.code === pref)),
+  );
+  // Only the locale code goes into the link: never the script or anything else (FR-015).
+  langReport.hidden = !i18n.isBeta();
+  langReport.href = REPORT_URL + encodeURIComponent(`[${i18n.locale()}] `);
+}
+
+langSelect.addEventListener("change", () => i18n.setPreference(langSelect.value));
+
+// Redraws every piece of tool text in place. It must never touch the script, the
+// console history or the Python session (FR-003, FR-012).
+i18n.onChange(() => {
+  i18n.applyTranslations(document);
+  // render() would reset the status line (e.g. replace an error with "Ready"); keep the current one.
+  const view = statusView;
+  render();
+  setStatus(view);
+  // Same values in new words: don't replay the "changed" flash (until the next real pause).
+  $("variables").classList.add("no-flash");
+  if (pause) variables.select(pause, selectedFrame);
+  else variables.reset();
+  document.title = t("title.file", { file: fileName });
+  renderLanguage();
 });
 
 // ---------------------------------------------------------------- splitters
@@ -408,25 +446,22 @@ splitter(
 // ---------------------------------------------------------------- boot
 
 function showBlocker() {
-  const fromDisk = location.protocol === "file:";
-  $("blocker-text").innerHTML = fromDisk
-    ? "The page was opened directly from your disk. Serve the folder instead, for example with " +
-      "<code>python3 -m http.server</code>, then open <code>http://localhost:8000</code>."
-    : "Snake Tutor runs Python inside your browser and needs a feature called cross-origin isolation, " +
-      "which a small helper (a service worker) switches on the first time the page loads. It did not " +
-      "turn on here. Try reloading, and avoid private / incognito windows, which block the helper.";
+  $("blocker-text").dataset.i18n = location.protocol === "file:" ? "blocker.fromDiskHtml" : "blocker.isolation";
+  i18n.applyTranslations($("blocker"));
   $("blocker").hidden = false;
 }
 
+i18n.applyTranslations(document);
+renderLanguage();
 restore();
 variables.reset();
 render();
 
 if (window.crossOriginIsolated) {
-  setStatus("Loading Python…");
+  setStatus(() => t("status.loadingPython"));
   runner = new Runner(onMessage);
 } else {
   // coi-serviceworker reloads the page once it is installed; only complain if that never happens.
-  setStatus("Preparing…");
+  setStatus(() => t("status.preparing"));
   setTimeout(showBlocker, location.protocol === "file:" ? 0 : 4000);
 }

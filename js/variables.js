@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Variables panel: call stack, the selected frame's variables, and module globals.
+import { t } from "./i18n.js";
+
 export function createVariables(element, { onSelectFrame }) {
   const open = new Set(); // keys of expanded containers, kept across steps
   let previous = null; // values at the previous pause (null on the first pause)
@@ -43,7 +45,7 @@ export function createVariables(element, { onSelectFrame }) {
     if (v.more) {
       const more = document.createElement("div");
       more.className = "var-more";
-      more.textContent = `… ${v.more} more`;
+      more.textContent = t("vars.more", { count: v.more });
       children.append(more);
     }
     details.append(children);
@@ -71,7 +73,7 @@ export function createVariables(element, { onSelectFrame }) {
     if (!pause) {
       const hint = document.createElement("p");
       hint.className = "muted";
-      hint.textContent = "Variables appear here while the program is paused.";
+      hint.textContent = t("vars.hint");
       element.append(hint);
       return;
     }
@@ -80,13 +82,15 @@ export function createVariables(element, { onSelectFrame }) {
     if (pause.returned) {
       const ret = document.createElement("div");
       ret.className = "returned";
-      ret.textContent = `↩ ${pause.returned.name}() returned ${pause.returned.value}`;
+      ret.textContent = t("vars.returned", { function: pause.returned.name, value: pause.returned.value });
       element.append(ret);
     }
 
     const stack = document.createElement("section");
     stack.className = "var-section";
-    stack.innerHTML = `<h3>Call stack</h3>`;
+    const stackHeading = document.createElement("h3");
+    stackHeading.textContent = t("vars.callStack");
+    stack.append(stackHeading);
     const list = document.createElement("ol");
     list.className = "stack";
     frames.forEach((frame, index) => {
@@ -95,8 +99,8 @@ export function createVariables(element, { onSelectFrame }) {
       button.type = "button";
       button.className = index === selected ? "frame selected" : "frame";
       button.innerHTML = `<span class="frame-name"></span><span class="frame-line"></span>`;
-      button.children[0].textContent = frame.name === "<module>" ? "main program" : `${frame.name}()`;
-      button.children[1].textContent = `line ${frame.line}`;
+      button.children[0].textContent = frame.name === "<module>" ? t("vars.mainProgram") : `${frame.name}()`;
+      button.children[1].textContent = t("vars.line", { line: frame.line });
       button.addEventListener("click", () => onSelectFrame(index));
       item.append(button);
       list.append(item);
@@ -108,15 +112,15 @@ export function createVariables(element, { onSelectFrame }) {
     const isModule = selected === frames.length - 1;
     element.append(
       section(
-        isModule ? "Variables" : `Local variables — ${frame.name}()`,
+        isModule ? t("vars.variables") : t("vars.locals", { function: frame.name }),
         frame.locals,
         frameKey(frames, selected),
-        "No variables yet.",
+        t("vars.noneYet"),
       ),
     );
     if (!isModule) {
       const module = frames.length - 1;
-      element.append(section("Global variables", frames[module].locals, frameKey(frames, module), "None."));
+      element.append(section(t("vars.globals"), frames[module].locals, frameKey(frames, module), t("vars.none")));
     }
   }
 
