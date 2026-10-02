@@ -21,7 +21,7 @@ Informal **du** throughout ("Dréck op…", "deng Datei"), including the example
 
 ## Core debugging terms
 
-Source: no VS Code language pack exists for Luxembourgish — project terms, confirmed by the fluent-speaker review (FR-016). A later VS Code rename is adopted only at this language's next review or edit.
+Source: no VS Code language pack exists for Luxembourgish — project terms, not yet reviewed by a fluent speaker (FR-016). A later VS Code rename is adopted only at this language's next review or edit.
 
 | Concept | Term | Note |
 |---------|------|------|

@@ -65,8 +65,9 @@ active = preference is Explicit(code) ? code
 
 Derived state shown in the UI:
 - **Selector value**: `auto` or `code`. The "Automatic" option's label always names the language
-  Automatic gives on this system (`systemLocale()`), e.g. `Automatic (Deutsch)` (FR-002), even
-  while an explicit language is selected.
+  Automatic gives on this system (`systemLocale()`), with the beta suffix when that locale is beta,
+  e.g. `Automatic (Deutsch (beta))` or `Automatic (English)` (FR-002, FR-018), even while an
+  explicit language is selected.
 - **Beta**: `!catalogFor(active).meta.reviewed`, which shows the "(beta)" suffix and the report
   link (FR-014, FR-015).
 

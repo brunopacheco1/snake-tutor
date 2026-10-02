@@ -35,7 +35,14 @@ time, so `node --test` can import it.
 
 On `onChange`:
 1. `applyTranslations(document)`.
-2. `render()` (status line, Start/Continue label and tooltip).
-3. `variables.select(pause, selectedFrame)` if paused, else `variables.reset()`.
+2. `render()` (Start/Continue label and tooltip), then redraw the **current** status line in the
+   new language. The status is kept as a view function, so an error or "Paused before line N"
+   stays as it is and is not reset to "Ready".
+3. `variables.select(pause, selectedFrame)` if paused, else `variables.reset()`. The pane gets
+   `no-flash` so the same values in new words don't replay the "changed" highlight; the next
+   real pause removes it.
 4. Update the language selector state, the beta link and `document.title`.
-5. Never call `loadScript`, `terminal.clear`, or any runner method.
+5. Write `t("lang.changed", { language })` (the active language's own name) into the polite
+   `#lang-announce` live region, so screen readers hear the change once, in the new language.
+   Focus stays on `#lang-select` (FR-018).
+6. Never call `loadScript`, `terminal.clear`, or any runner method.

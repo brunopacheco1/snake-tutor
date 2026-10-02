@@ -20,7 +20,7 @@ Informal **tu** throughout ("Prime…", "o teu ficheiro"), including the example
 
 ## Core debugging terms
 
-Source: no VS Code language pack exists for European Portuguese — project terms, confirmed by the fluent-speaker review (FR-016). A later VS Code rename is adopted only at this language's next review or edit.
+Source: no VS Code language pack exists for European Portuguese — project terms, not yet reviewed by a fluent speaker (FR-016). A later VS Code rename is adopted only at this language's next review or edit.
 
 | Concept | Term | Note |
 |---------|------|------|

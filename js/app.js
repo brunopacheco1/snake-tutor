@@ -358,8 +358,8 @@ const languageLabel = (meta) => (i18n.isBeta(meta.code) ? t("lang.beta", { langu
 function renderLanguage() {
   const pref = i18n.preference();
   const systemMeta = i18n.LOCALES.find((meta) => meta.code === i18n.systemLocale());
-  // "Automatic" names the language it gives on this system (FR-002).
-  const auto = new Option(t("lang.auto", { language: systemMeta.name }), "auto", false, pref === "auto");
+  // "Automatic" names the language it gives on this system (FR-002), with its beta status (FR-018).
+  const auto = new Option(t("lang.auto", { language: languageLabel(systemMeta) }), "auto", false, pref === "auto");
   langSelect.replaceChildren(
     auto,
     ...i18n.LOCALES.map((meta) => {

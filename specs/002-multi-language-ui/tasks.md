@@ -276,3 +276,22 @@ of them changes the debugger core in `py/`.
 ## Phase 9: Convergence
 
 - [X] T060 Update the `blocker.fromDiskHtml` and `blocker.isolation` rows of the "Startup blocker" table in `specs/002-multi-language-ui/contracts/locale-catalog.md` to the current English texts in `js/locales/en.js` (rewritten by T053 for FR-019) per plan: contracts/locale-catalog.md (partial)
+
+---
+
+## Phase 10: Convergence
+
+- [X] T061 In `renderLanguage()` in `js/app.js`, build the "Automatic (…)" option's label with the same beta rule as the other entries, i.e. `t("lang.auto", {language: languageLabel(systemMeta)})`, so that on a system whose language is a beta translation the entry reads e.g. "Automatique (Deutsch (bêta))" and announces its beta status, as T031 specified; add a test or browser check (quickstart §6) covering a beta system language, per FR-018 / FR-014 (partial)
+- [X] T062 In `js/locales/pt-PT.style.md` and `js/locales/lb.style.md`, replace "project terms, confirmed by the fluent-speaker review (FR-016)" with "project terms — no VS Code pack; not yet reviewed by a fluent speaker", because both catalogs still have `reviewed: false` and no review has taken place, per FR-016 / FR-020 (contradicts)
+
+---
+
+## Phase 11: Convergence
+
+- [X] T063 Update the "Selector value" bullet in `specs/002-multi-language-ui/data-model.md` so the Automatic label example matches the code after T061: the label names the language Automatic gives together with its beta suffix when that locale is beta (e.g. `Automatic (Deutsch (beta))`, or `Automatic (English)` for an English system), per plan: data-model.md / FR-018 (partial)
+
+---
+
+## Phase 12: Convergence
+
+- [X] T064 Bring the "Page responsibilities" list in `specs/002-multi-language-ui/contracts/i18n-module.md` in line with the `i18n.onChange` handler in `js/app.js`: step 2 keeps the current status line (re-rendered in the new language, not reset to "Ready"), the variables pane re-renders without replaying the "changed" highlight, and a new step writes `t("lang.changed", {language})` into the polite `#lang-announce` live region without moving focus from `#lang-select`, per plan: contracts/i18n-module.md / FR-018 (partial)

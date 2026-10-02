@@ -79,6 +79,9 @@ Expected:
 3. Click it. A new tab opens on the GitHub "new issue" form with the translation template and the
    title prefixed `[<code>]`. The URL contains no script text.
 4. Choose English. No beta label and no link.
+5. With the system language set to a beta locale (e.g. `de`), the first entry reads
+   `Automatic (Deutsch (beta))`, so it announces the beta status too (FR-018). With an English
+   system it reads `Automatic (English)`.
 
 ## 7. Example program (US3, FR-011)
 
