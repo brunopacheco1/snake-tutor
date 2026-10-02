@@ -1,0 +1,19 @@
+Snake Tutor
+Copyright 2026 Bruno Pacheco
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This product includes or loads the following third-party software:
+
+- coi-serviceworker 0.1.7 (vendored as coi-serviceworker.js)
+  Copyright Guido Zuidhof and contributors. MIT License.
+  https://github.com/gzuidhof/coi-serviceworker
+
+- CodeMirror 5.65.21 (loaded from cdnjs at runtime)
+  Copyright Marijn Haverbeke and others. MIT License.
+  https://codemirror.net/5/
+
+- Pyodide 314.0.7 (loaded from jsDelivr at runtime)
+  Copyright Pyodide contributors and Mozilla. Mozilla Public License 2.0.
+  Includes CPython, Python Software Foundation License.
+  https://pyodide.org
