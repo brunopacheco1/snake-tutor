@@ -55,6 +55,7 @@ Source column = where the English string lives today.
 | `lang.beta` | {language} (beta) | language |
 | `lang.report` | Report a translation problem | |
 | `lang.reportTitle` | Opens GitHub in a new tab — you need a GitHub account to report | |
+| `lang.changed` | Language: {language} | language |
 
 ### Debug controls (`index.html`, `js/app.js` `render`)
 
@@ -136,6 +137,6 @@ always match the buttons.
 | Key | English | Params |
 |-----|---------|--------|
 | `blocker.title` | Snake Tutor can't start in this browser window | |
-| `blocker.fromDiskHtml` | The page was opened directly from your disk. Serve the folder instead, for example with <code>python3 -m http.server</code>, then open <code>http://localhost:8000</code>. | |
-| `blocker.isolation` | Snake Tutor runs Python inside your browser and needs a feature called cross-origin isolation, which a small helper (a service worker) switches on the first time the page loads. It did not turn on here. Try reloading, and avoid private / incognito windows, which block the helper. | |
+| `blocker.fromDiskHtml` | This page was opened straight from a file, so Python cannot run. Open it through a web address instead: run <code>python3 -m http.server</code> in its folder, then open <code>http://localhost:8000</code>. | |
+| `blocker.isolation` | Snake Tutor could not switch on a browser feature it needs to run Python. Reload the page, and avoid private or incognito windows. | |
 | `blocker.reload` | Reload | |

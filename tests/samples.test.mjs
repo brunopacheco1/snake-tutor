@@ -7,6 +7,7 @@ import { readFile } from "node:fs/promises";
 import { loadPyodide } from "pyodide";
 
 const CONTINUE = 1;
+const STEP_INTO = 3;
 const INPUT = 6;
 const STOP = 5;
 const CODES = ["en", "fr", "de", "it", "pt-PT", "pt-BR", "lb"];
@@ -18,6 +19,7 @@ let py;
 let events;
 let queue;
 let output;
+let steps;
 
 before(async () => {
   py = await loadPyodide();
@@ -28,6 +30,11 @@ before(async () => {
   py.registerJsModule("tutor_host", {
     emit: (json) => events.push(JSON.parse(json)),
     wait: () => {
+      // Stepping mode: answer input() with "Ada", otherwise step into the next line.
+      if (queue === "step") {
+        if (++steps > 500) return `${STOP}\n`;
+        return events.at(-1)?.type === "input" ? `${INPUT}\nAda` : `${STEP_INTO}\n`;
+      }
       const [code, payload = ""] = queue.shift() ?? [STOP];
       return `${code}\n${payload}`;
     },
@@ -37,9 +44,10 @@ before(async () => {
   py.runPython("import sys; sys.path.insert(0, '/tutor')");
 });
 
-function run(source) {
+function run(source, mode = "continue") {
   events = [];
-  queue = [[CONTINUE], [INPUT, "Ada"]];
+  steps = 0;
+  queue = mode === "step" ? "step" : [[CONTINUE], [INPUT, "Ada"]];
   output = "";
   const runner = py.pyimport("tutor_debugger").run;
   const bps = py.toPy([]);
@@ -70,5 +78,20 @@ for (const code of CODES) {
     assert.match(printed, /Ada/);
     const lines = printed.split("\n").filter((line) => line.trim());
     assert.match(lines.at(-1), /14$/);
+  });
+
+  test(`${code} example pauses on the same lines with the same values as English`, () => {
+    const trace = (source) =>
+      run(source, "step").done && events
+        .filter((e) => e.type === "paused")
+        .map((e) => ({
+          line: e.line,
+          // `message` holds translated text, so its value legitimately differs (FR-011).
+          vars: e.frames.map((f) => f.locals.filter((v) => v.name !== "message").map((v) => `${v.name}=${v.value}`)),
+        }));
+    const expected = trace(english);
+    const actual = trace(catalogs[code].sample);
+    assert.ok(expected.length > 10, "the English example should pause many times");
+    assert.deepEqual(actual, expected);
   });
 }

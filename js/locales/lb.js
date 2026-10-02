@@ -25,6 +25,7 @@ export const messages = {
   "lang.beta": "{language} (Beta)",
   "lang.report": "E Feeler an der Iwwersetzung mellen",
   "lang.reportTitle": "Mécht GitHub an engem neien Tab op – fir e Feeler ze mellen, brauchs de e GitHub-Kont",
+  "lang.changed": "Sprooch: {language}",
   "controls.label": "Debug-Steierung",
   "controls.start": "Starten",
   "controls.startTitle": "Starten (F5) – de Programm vu vir un ausféieren",
@@ -78,8 +79,8 @@ export const messages = {
   "vars.more": {"one": "… nach {count}", "other": "… nach {count}"},
   "editor.breakpointTitle": "Haltepunkt (klick, fir en ewechzehuelen)",
   "blocker.title": "Snake Tutor kann an dëser Browserfënster net starten",
-  "blocker.fromDiskHtml": "D’Säit gouf direkt vun denger Festplack opgemaach. Stell den Dossier amplaz iwwer e Server zur Verfügung, zum Beispill mat <code>python3 -m http.server</code>, a maach dann <code>http://localhost:8000</code> op.",
-  "blocker.isolation": "Snake Tutor féiert Python an dengem Browser aus a brauch dofir eng Funktioun, déi Cross-Origin-Isolatioun heescht. E klengen Helfer (e Service Worker) schalt se un, wann d’Säit déi éischte Kéier gelueden gëtt. Dat huet hei net geklappt. Lued d’Säit nei a vermeit privat / Inkognito-Fënsteren, well déi den Helfer blockéieren.",
+  "blocker.fromDiskHtml": "Dës Säit gouf direkt aus enger Datei opgemaach, dofir kann Python net lafen. Maach se amplaz iwwer eng Webadress op: Féier an hirem Dossier <code>python3 -m http.server</code> aus a maach dann <code>http://localhost:8000</code> op.",
+  "blocker.isolation": "Snake Tutor konnt eng Browserfunktioun net uschalten, déi et brauch, fir Python auszeféieren. Lued d’Säit nei a vermeit privat oder Inkognito-Fënsteren.",
   "blocker.reload": "Nei lueden",
 };
 

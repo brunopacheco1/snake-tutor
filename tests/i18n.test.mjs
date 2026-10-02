@@ -195,3 +195,25 @@ test("every catalog ships its own example program", () => {
   });
   assert.equal(i18n.isAnySample("print('mine')\n"), false);
 });
+
+// ---------------------------------------------------------------- FR-019: plain language
+
+const sentences = (text) =>
+  (text.replace(/<code>.*?<\/code>/g, "CODE").replace(/<[^>]+>/g, "").replace(/\{\w+\}/g, "X").match(/[.!?](\s|$)/g) ?? []).length;
+
+test("every message has at most two sentences", () => {
+  CODES.forEach((code, index) => {
+    for (const [key, value] of Object.entries(catalogs[index].messages)) {
+      for (const text of forms(value)) assert.ok(sentences(text) <= 2, `${code} ${key} has ${sentences(text)} sentences`);
+    }
+  });
+});
+
+test("the startup-failure texts avoid technical jargon", () => {
+  CODES.forEach((code, index) => {
+    const text = catalogs[index].messages["blocker.isolation"].toLowerCase();
+    for (const term of ["cross-origin", "service worker", "isolation", "isolamento", "isolatioun"]) {
+      assert.ok(!text.includes(term), `${code} blocker.isolation mentions "${term}"`);
+    }
+  });
+});

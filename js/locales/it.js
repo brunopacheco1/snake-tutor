@@ -25,6 +25,7 @@ export const messages = {
   "lang.beta": "{language} (beta)",
   "lang.report": "Segnala un problema di traduzione",
   "lang.reportTitle": "Apre GitHub in una nuova scheda — per segnalare ti serve un account GitHub",
+  "lang.changed": "Lingua: {language}",
   "controls.label": "Controlli di debug",
   "controls.start": "Avvia",
   "controls.startTitle": "Avvia (F5) — esegui il programma dall’inizio",
@@ -78,8 +79,8 @@ export const messages = {
   "vars.more": {"one": "… e {count} altro", "other": "… e altri {count}"},
   "editor.breakpointTitle": "Punto di interruzione (clic per rimuoverlo)",
   "blocker.title": "Snake Tutor non può avviarsi in questa finestra del browser",
-  "blocker.fromDiskHtml": "La pagina è stata aperta direttamente dal disco. Servi invece la cartella con un server, ad esempio con <code>python3 -m http.server</code>, poi apri <code>http://localhost:8000</code>.",
-  "blocker.isolation": "Snake Tutor esegue Python nel tuo browser e ha bisogno di una funzionalità chiamata isolamento cross-origin, che un piccolo aiutante (un service worker) attiva al primo caricamento della pagina. Qui non si è attivata. Prova a ricaricare ed evita le finestre private / in incognito, che bloccano l’aiutante.",
+  "blocker.fromDiskHtml": "Questa pagina è stata aperta direttamente da un file, quindi Python non può funzionare. Aprila invece da un indirizzo web: esegui <code>python3 -m http.server</code> nella sua cartella, poi apri <code>http://localhost:8000</code>.",
+  "blocker.isolation": "Snake Tutor non è riuscito ad attivare una funzione del browser che gli serve per eseguire Python. Ricarica la pagina ed evita le finestre private o in incognito.",
   "blocker.reload": "Ricarica",
 };
 
